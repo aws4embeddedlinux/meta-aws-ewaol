@@ -1,0 +1,48 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+header:
+  version: 10
+  includes:
+    - repo: meta-ewaol
+      file: meta-ewaol-config/kas/ewaol-base.yml
+    - repo: meta-ewaol
+      file: meta-ewaol-config/kas/arm-machines.yml
+
+repos:
+  meta-ewaol:
+    url: "https://git.gitlab.arm.com/ewaol/meta-ewaol.git"
+    path: layers/meta-ewaol
+    refspec: v0.2.4
+  meta-aws:
+    url: https://github.com/aws/meta-aws.git
+    path: layers/meta-aws
+    refspec: hardknott
+  meta-virtualization:
+    refspec: hardknott
+  meta-ewaol-ext:
+    path: meta-ewaol-ext
+    refspec: hardknott
+  meta-openembedded:
+    refspec: hardknott
+  poky:
+    refspec: hardknott
+
+machine: generic-arm64
+
+local_conf_header:
+   meta-custom: |
+    FILESEXTRAPATHS_prepend_pn-linux-yocto = "${TOPDIR}/../kernelconfig/:"
+    SRC_URI_append_pn-linux-yocto = " file://gravitonKernelConfigs.cfg "
+
+    INHERIT += "extrausers"
+    # Hardening: Locking the root password. Creating the ewaol without password for ssh key-based login only
+    EXTRA_USERS_PARAMS = "usermod -L root; useradd -p '*' ewaol"
+
+    EXTRA_IMAGE_FEATURES_append = "ssh-server-openssh"
+    # Forcing removal of debug-tweakes as ewaol includes it in all targets by default and that leads to reversing some sshd_config hardening done in our bbappend when do_rootfs runs
+    EXTRA_IMAGE_FEATURES_remove = "debug-tweaks"
+    IMAGE_INSTALL_append = " rng-tools awscli cloud-init cloud-init-systemd e2fsprogs e2fsprogs-resize2fs e2fsprogs-tune2fs e2fsprogs-e2fsck e2fsprogs-mke2fs parted sudo sudo-sudo openssh-sftp-server"
+    IMAGE_FSTYPES += " wic wic.vhdx"
+
+target: 
+ - ewaol-image-docker

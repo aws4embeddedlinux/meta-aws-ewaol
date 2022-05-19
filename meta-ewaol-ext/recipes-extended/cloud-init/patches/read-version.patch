@@ -1,0 +1,11 @@
+--- a/tools/read-version        2022-05-19 19:15:05.153831965 +0000
++++ b/tools/read-version        2022-05-19 20:21:23.967454704 +0000
+@@ -71,7 +71,7 @@
+ is_release_branch_ci = (
+     os.environ.get("TRAVIS_PULL_REQUEST_BRANCH", "").startswith("upstream/")
+ )
+-if is_gitdir(_tdir) and which("git") and not is_release_branch_ci:
++if False and is_gitdir(_tdir) and which("git") and not is_release_branch_ci:
+     flags = []
+     if use_tags:
+         flags = ['--tags']
