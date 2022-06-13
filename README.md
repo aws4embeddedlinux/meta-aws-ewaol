@@ -18,7 +18,7 @@ This repository provides the example code and instructions for building a custom
 1. Update the Operating System and install pre-requisites for Yocto, Kas and our image creation script:
     ```bash
     sudo apt-get update
-    sudo apt-get install -y gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev make python3-pip jq
+    sudo apt-get install -y gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev make python3-pip jq zstd liblz4-tool
     ```
 
 1. Install AWS CLI v2
@@ -32,7 +32,7 @@ This repository provides the example code and instructions for building a custom
 1. Install the python packages:
 
     ```bash
-    sudo pip3 install sphinx sphinx_rtd_theme pyyaml kas==2.5 git-remote-codecommit
+    sudo pip3 install sphinx sphinx_rtd_theme pyyaml kas==3.0.2 git-remote-codecommit
     ```
 
 ### Building EWAOL
