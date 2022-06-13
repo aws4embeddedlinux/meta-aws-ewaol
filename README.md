@@ -52,7 +52,7 @@ This repository provides the example code and instructions for building a custom
 
 ### Creating AMI from image file
 
-From meta-aws-ewaol directory, run the bash script. Replace <S3_BUCKET_IMPORT_IMAGES> with the bucket name created by the CloudFormation Stack in the pre-requisites section and choose the appropriate size for the future root disk of AMI to have by entering a number (e.g. 8) in place of <AMI_DISK_SIZE_IN_GB> :
+From meta-aws-ewaol directory, run the bash script. Replace <S3_BUCKET_IMPORT_IMAGES> with the bucket name created by the CloudFormation Stack in the pre-requisites section and choose the appropriate size for the future root disk of AMI to have by entering a number (e.g. 16) in place of <AMI_DISK_SIZE_IN_GB> :
 
 ```bash
 bash scripts/create-ami.sh <S3_BUCKET_IMPORT_IMAGES> <AMI_DISK_SIZE_IN_GB>
