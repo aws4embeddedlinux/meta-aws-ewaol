@@ -12,7 +12,8 @@ fi
 IMPORT_BUCKET_NAME=$1
 AMI_DISK_SIZE_GB=$2
 
-TESTDATA_JSON="build/tmp/deploy/images/generic-arm64/ewaol-image-docker-generic-arm64.testdata.json"
+IMG_DIR="build/tmp_virtualization/deploy/images/generic-arm64"
+TESTDATA_JSON="${IMG_DIR}/ewaol-virtualization-image-generic-arm64.testdata.json"
 
 DISTRO=$(jq -r '.DISTRO' $TESTDATA_JSON)
 DISTRO_CODENAME=$(jq -r '.DISTRO_CODENAME' $TESTDATA_JSON)
@@ -34,7 +35,7 @@ echo IMAGE_ROOTFS_SIZE=$IMAGE_ROOTFS_SIZE
 echo AMI_DISK_SIZE_GB=$AMI_DISK_SIZE_GB
 
 echo "Pushing image ${IMAGE_NAME}.rootfs.wic.vhdx to s3://${IMPORT_BUCKET_NAME}"
-aws s3 cp build/tmp/deploy/images/generic-arm64/${IMAGE_NAME}.rootfs.wic.vhdx s3://${IMPORT_BUCKET_NAME}
+aws s3 cp ${IMG_DIR}/${IMAGE_NAME}.rootfs.wic.vhdx s3://${IMPORT_BUCKET_NAME}
 
 cat <<EOF > ewaol-import.json
 {
