@@ -12,7 +12,7 @@ This repository provides the example code and instructions for building a custom
 1. The resources created by deploying the [VMImport CloudFormation Template](cfn/vmimport-cfn.yml) (roles, policies, S3 bucket for images).
     1. Take note of the outputs of the stack deployment as they'll be needed in the following steps
 
-1. An arm64 Ubuntu 20.04 EC2 instance using Graviton processor (e.g. c6g.4xlarge) with 100GB+ root disk with internet access using the instance profile created by the CloudFormation template from previous step (VMBuilderEC2Role).
+1. An arm64 Ubuntu 20.04 EC2 instance using Graviton processor (e.g. c6g.4xlarge) with 150GB+ root disk with internet access using the instance profile created by the CloudFormation template from previous step (VMBuilderEC2Role).
 
 ### Build Dependencies
 1. Update the Operating System and install pre-requisites for Yocto, Kas and our image creation script:
