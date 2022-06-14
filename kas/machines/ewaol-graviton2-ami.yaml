@@ -3,8 +3,6 @@
 header:
   version: 10
   includes:
-          #    - repo: meta-ewaol
-          #      file: meta-ewaol-config/kas/include/arm-machines.yml
     - repo: meta-ewaol
       file: meta-ewaol-config/kas/virtualization.yml
 
@@ -46,4 +44,4 @@ local_conf_header:
 
 target: 
   - ewaol-virtualization-image
-# - ewaol-image-docker
+
