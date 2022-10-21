@@ -1,12 +1,12 @@
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
-FILESEXTRAPATHS_prepend := "${THISDIR}/conf:"
-FILESEXTRAPATHS_prepend := "${THISDIR}/patches:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/conf:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/patches:"
 
-SRC_URI_append = "file://cloud.cfg"
-SRC_URI_append = " file://read-version.patch"
+SRC_URI:append = "file://cloud.cfg"
+SRC_URI:append = " file://read-version.patch"
 
-do_install_append () {
+do_install:append () {
 	# Avoid ordering cycle in systemd that triggers removal of cloud-init.service. See https://bugs.launchpad.net/ubuntu/+source/cloud-init/+bug/1956629
 	sed -i -e 's:Before=sysinit.target:#Before=sysinit.target:' ${D}${systemd_system_unitdir}/cloud-init.service 
 	

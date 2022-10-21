@@ -204,6 +204,7 @@ Resources:
               - "ec2:TerminateInstances"
               - "ec2:ImportImage"
               - "ec2:RegisterImage"
+              - "ec2:DeregisterImage"
               - "ec2:ImportSnapshot"
               - "ec2:DescribeImportImageTasks"
               - "ec2:DescribeImportSnapshotTasks"
