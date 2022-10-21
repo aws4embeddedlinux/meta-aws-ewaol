@@ -4,15 +4,22 @@ header:
   version: 10
   includes:
     - repo: meta-ewaol
-      file: meta-ewaol-config/kas/virtualization.yml
+      file: meta-ewaol-config/kas/baremetal.yml
 
 repos:
+  meta-arm:
+    url: https://git.yoctoproject.org/git/meta-arm
+    path: layers/meta-arm
+    refspec: kirkstone
+    layers:
+      meta-arm: included
+      meta-arm-toolchain: included
   meta-ewaol:
-    url: "https://git.gitlab.arm.com/ewaol/meta-ewaol.git"
+    url: https://gitlab.com/Linaro/ewaol/meta-ewaol
     path: layers/meta-ewaol
     refspec: v1.0
   meta-aws:
-    url: https://github.com/aws/meta-aws.git
+    url: https://github.com/aws4embeddedlinux/meta-aws.git
     path: layers/meta-aws
     refspec: kirkstone
   meta-virtualization:
@@ -39,9 +46,10 @@ local_conf_header:
     EXTRA_IMAGE_FEATURES:append = "ssh-server-openssh"
     # Forcing removal of debug-tweakes as ewaol includes it in all targets by default and that leads to reversing some sshd_config hardening done in our bbappend when do_rootfs runs
     EXTRA_IMAGE_FEATURES:remove = "debug-tweaks"
-    IMAGE_INSTALL:append = " rng-tools awscli cloud-init cloud-init-systemd e2fsprogs e2fsprogs-resize2fs e2fsprogs-tune2fs e2fsprogs-e2fsck e2fsprogs-mke2fs parted sudo sudo-sudo openssh-sftp-server python3-netifaces python3-charset-normalizer"
+    IMAGE_INSTALL:append = " git rng-tools aws-cli cloud-init cloud-init-systemd e2fsprogs e2fsprogs-resize2fs e2fsprogs-tune2fs e2fsprogs-e2fsck e2fsprogs-mke2fs parted sudo sudo-sudo openssh-sftp-server python3-netifaces python3-charset-normalizer canutils"
     IMAGE_FSTYPES += " wic wic.vhdx"
+    DISTRO_FEATURES:append = " ewaol-baremetal"
 
-target: 
-  - ewaol-virtualization-image
+# target: 
+#   - ewaol-baremetal-image
 
