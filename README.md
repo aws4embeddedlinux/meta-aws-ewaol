@@ -10,18 +10,18 @@ This repository provides the example code and instructions for building a custom
 1. An AWS account and the necessary IAM rights to create EC2 instances, EBS snapshots, EBS volumes, S3 buckets, and IAM roles and policies.
 1. A VPC with appropriate subnets and routing required to access the build server.
 1. The resources created by deploying the [VMImport CloudFormation Template](cfn/vmimport-cfn.yml) (roles, policies, S3 bucket for images).
-    1. Take note of the outputs of the stack deployment as they'll be needed in the following steps
+    1. Take note of the outputs of the stack deployment as they'll be needed in the following steps.
 
-1. An arm64 Ubuntu 20.04 EC2 instance using Graviton processor (e.g. c6g.4xlarge) with 150GB+ root disk with internet access using the instance profile created by the CloudFormation template from previous step (VMBuilderEC2Role).
+1. An arm64 Ubuntu 20.04 EC2 instance using a Graviton processor (e.g. c6g.4xlarge) with 150GB+ root disk with internet access using the instance profile created by the CloudFormation template from previous step (VMBuilderEC2Role).
 
 ### Build Dependencies
-1. Update the Operating System and install pre-requisites for Yocto, Kas and our image creation script:
+1. Update the Operating System and install the pre-requisites for Yocto, Kas, and our image creation script:
     ```bash
     sudo apt-get update
     sudo apt-get install -y gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev make python3-pip jq zstd liblz4-tool qemu-utils
     ```
 
-1. Install AWS CLI v2
+1. Install AWS CLI v2:
 
     ```bash
     curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "/tmp/awscliv2.zip"
@@ -37,14 +37,14 @@ This repository provides the example code and instructions for building a custom
 
 ### Building EWAOL
 
-1. Clone the repo from the instance or upload the code and invoke build command. For example:
+1. Clone the repo from the instance or upload the code and invoke the build command. For example:
 
     ```bash
     git clone https://github.com/aws4embeddedlinux/meta-aws-ewaol.git
     cd meta-aws-ewaol
     ```
 
-1. Customize the ewaol-graviton2-ami.yaml as needed and invoke build.
+1. Customize the ewaol-graviton2-ami.yaml as needed and invoke the build:
 
     ```bash
     kas build kas/machines/ewaol-graviton2-ami.yaml
@@ -52,7 +52,7 @@ This repository provides the example code and instructions for building a custom
 
 ### Creating AMI from image file
 
-From meta-aws-ewaol directory, run the bash script. Replace <S3_BUCKET_IMPORT_IMAGES> with the bucket name created by the CloudFormation Stack in the pre-requisites section and choose the appropriate size for the future root disk of AMI to have by entering a number (e.g. 16) in place of <AMI_DISK_SIZE_IN_GB> :
+From meta-aws-ewaol directory, run the bash script. Replace \<S3_BUCKET_IMPORT_IMAGES\> with the bucket name created by the CloudFormation Stack in the pre-requisites section, then choose the appropriate size which the future root disk of the AMI should have by entering a number (e.g. 16) in place of \<AMI_DISK_SIZE_IN_GB\> :
 
 ```bash
 bash scripts/create-ami.sh <S3_BUCKET_IMPORT_IMAGES> <AMI_DISK_SIZE_IN_GB>
@@ -60,15 +60,15 @@ bash scripts/create-ami.sh <S3_BUCKET_IMPORT_IMAGES> <AMI_DISK_SIZE_IN_GB>
 
 ## Launch the EC2 Image as usual using your newly created AMI
 
-1. In the Web Console, Navigate to EC2->Images->AMIs
-1. Select the desired AMI and click 'Launch instance from Image'
-1. Follow the wizard as usual
-1. Access the image with the previously provided ssh key with user **ewaol**
+1. In the Web Console, Navigate to EC2-\>Images-\>AMIs.
+1. Select the desired AMI and click 'Launch instance from Image'.
+1. Follow the wizard as usual.
+1. Access the image with the previously provided ssh key with user **ewaol**.
 
 ## Limitations
 
 The image does not yet support online expansion of partitions/filesystems via cloud-init.
-Follow the below workaround to expand root partition and filesystem (this can be used as user data script):
+Follow the below workaround to expand the root partition and filesystem (this can be used as a user data script):
 
 ```bash
 #!/bin/sh
@@ -88,7 +88,7 @@ resize2fs /dev/nvme0n1p2
 
 ## Future Enchancements
 
-* Enable support for expanding filesystem on boot with cloud-init which depends on growpart. This needs cloud-utils which is not in openembedded recipes yet.
+* Enable support for expanding the filesystem on boot with cloud-init which depends on growpart. This needs cloud-utils which is not in openembedded recipes yet.
 
 ## Security
 
