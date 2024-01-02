@@ -29,6 +29,8 @@ repos:
     refspec: kirkstone
   meta-openembedded:
     refspec: kirkstone
+    layers:
+      meta-multimedia:
   poky:
     refspec: kirkstone
 
